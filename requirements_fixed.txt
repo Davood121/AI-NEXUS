@@ -1,0 +1,11 @@
+ollama
+ddgs
+edge-tts
+pygame-ce
+requests
+beautifulsoup4
+pytesseract
+pillow
+h2
+hyperframe
+hpack

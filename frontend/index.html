@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DavoodAI - Your Intelligent Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-ring"></div>
+                <span class="logo-text">AI</span>
+            </div>
+            <h2 class="loading-title">DavoodAI</h2>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+            <p class="loading-text" id="loadingText">Initializing AI System...</p>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="aurora-background">
+        <canvas id="particleCanvas"></canvas>
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="gradient-text">DavoodAI</span>
+            </h1>
+            <p class="hero-subtitle">Your Intelligent Conversational Assistant</p>
+            <button class="cta-button" onclick="scrollToChat()">
+                <span>Start Conversation</span>
+                <svg class="button-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Chat Interface -->
+    <section class="chat-section" id="chatSection">
+        <div class="container">
+            <div class="glass-container chat-container">
+                <div class="chat-header">
+                    <div class="ai-avatar">
+                        <div class="avatar-pulse"></div>
+                        <span class="avatar-text">AI</span>
+                    </div>
+                    <div class="chat-header-info">
+                        <h3>DavoodAI Assistant</h3>
+                        <p class="status-text">
+                            <span class="status-dot"></span>
+                            Online
+                        </p>
+                    </div>
+                    <button class="icon-button" onclick="toggleSettings()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M12 1v6m0 6v6m-9-9h6m6 0h6"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be added dynamically -->
+                </div>
+
+                <div class="typing-indicator" id="typingIndicator" style="display: none;">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="voice-visualizer" id="voiceVisualizer" style="display: none;">
+                        <canvas id="visualizerCanvas"></canvas>
+                    </div>
+                    <div class="quick-actions" id="quickActions">
+                        <button class="quick-action-btn" onclick="sendQuickMessage('Tell me a joke')">
+                            😄 Joke
+                        </button>
+                        <button class="quick-action-btn" onclick="sendQuickMessage('What can you do?')">
+                            ❓ Help
+                        </button>
+                        <button class="quick-action-btn" onclick="sendQuickMessage('Tell me something interesting')">
+                            💡 Fact
+                        </button>
+                        <button class="quick-action-btn" onclick="clearChat()">
+                            🗑️ Clear
+                        </button>
+                    </div>
+                    <div class="input-wrapper">
+                        <button class="icon-button attach-button" onclick="handleAttachment()" title="Attach file">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                            </svg>
+                        </button>
+                        <input 
+                            type="text" 
+                            class="chat-input" 
+                            id="chatInput" 
+                            placeholder="Type your message..."
+                            onkeypress="handleKeyPress(event)"
+                            oninput="handleTyping()"
+                        >
+                        <button class="icon-button voice-button" onclick="toggleVoice()" id="voiceButton" title="Voice input">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                                <line x1="12" y1="19" x2="12" y2="23"/>
+                                <line x1="8" y1="23" x2="16" y2="23"/>
+                            </svg>
+                        </button>
+                        <button class="send-button" onclick="sendMessage()" id="sendButton" title="Send message">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card" data-index="0">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <h3>Natural Conversations</h3>
+                    <p>Engage in human-like conversations with advanced language understanding</p>
+                </div>
+
+                <div class="feature-card" data-index="1">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                            <polyline points="2 17 12 22 22 17"/>
+                            <polyline points="2 12 12 17 22 12"/>
+                        </svg>
+                    </div>
+                    <h3>Knowledge Base</h3>
+                    <p>Access vast knowledge with intelligent information retrieval</p>
+                </div>
+
+                <div class="feature-card" data-index="2">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                        </svg>
+                    </div>
+                    <h3>Voice Interaction</h3>
+                    <p>Multiple TTS options including Edge TTS, Piper, and offline modes</p>
+                </div>
+
+                <div class="feature-card" data-index="3">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3>Memory System</h3>
+                    <p>Remembers context and preferences for personalized interactions</p>
+                </div>
+
+                <div class="feature-card" data-index="4">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </div>
+                    <h3>Customizable</h3>
+                    <p>Tailor the AI's behavior and responses to your needs</p>
+                </div>
+
+                <div class="feature-card" data-index="5">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    <h3>Secure & Private</h3>
+                    <p>Your conversations and data remain private and secure</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h3>Settings</h3>
+            <button class="icon-button" onclick="toggleSettings()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="settings-content">
+            <div class="settings-section">
+                <h4>API Configuration</h4>
+                <div class="setting-item">
+                    <label>API Endpoint</label>
+                    <input type="text" class="setting-input" id="apiEndpoint" placeholder="http://localhost:5000/api/chat" value="http://localhost:5000/api/chat">
+                </div>
+                <div class="setting-item">
+                    <label>API Key (Optional)</label>
+                    <input type="password" class="setting-input" id="apiKey" placeholder="Enter API key">
+                </div>
+                <div class="setting-item">
+                    <button class="test-connection-btn" onclick="testConnection()">Test Connection</button>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h4>Voice Settings</h4>
+                <div class="setting-item">
+                    <label>Enable Voice Output</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="voiceToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>TTS Engine</label>
+                    <select class="setting-select" id="ttsEngine">
+                        <option value="edge">Edge TTS</option>
+                        <option value="piper">Piper TTS</option>
+                        <option value="offline">Offline TTS</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label>Voice Speed</label>
+                    <input type="range" class="setting-range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1">
+                    <span class="range-value" id="voiceSpeedValue">1.0x</span>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h4>Appearance</h4>
+                <div class="setting-item">
+                    <label>Animations</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="animationsToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>Particle Effects</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="particlesToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h4>Conversation</h4>
+                <div class="setting-item">
+                    <label>Remember Context</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="contextToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>Auto-scroll</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="autoscrollToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label>Message Limit</label>
+                    <input type="number" class="setting-input" id="messageLimit" value="100" min="10" max="1000">
+                </div>
+                <div class="setting-item">
+                    <label>Response Delay (ms)</label>
+                    <input type="number" class="setting-input" id="responseDelay" value="1500" min="500" max="5000" step="100">
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h4>Data Management</h4>
+                <div class="setting-item">
+                    <button class="action-btn" onclick="exportChat()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Export Chat History
+                    </button>
+                </div>
+                <div class="setting-item">
+                    <button class="action-btn danger" onclick="clearAllData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                        Clear All Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-icon" id="toastIcon"></div>
+        <div class="toast-message" id="toastMessage"></div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

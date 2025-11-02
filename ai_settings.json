@@ -1,0 +1,10 @@
+{
+  "ai_model": "phi3:mini",
+  "voice": "en-US-AriaNeural",
+  "speech_enabled": true,
+  "search_enabled": true,
+  "response_length": 180,
+  "temperature": 0.6,
+  "ai_name": "Lambda I-NEXUS",
+  "auto_reset": true
+}

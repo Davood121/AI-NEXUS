@@ -1,0 +1,4 @@
+ollama
+duckduckgo-search
+piper-tts
+pygame

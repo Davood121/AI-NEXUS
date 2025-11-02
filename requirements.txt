@@ -1,0 +1,5 @@
+ollama
+ddgs
+edge-tts
+pygame
+requests

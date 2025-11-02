@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AI System specific
+*.mp3
+*.wav
+ai_knowledge_base.json
+ai_knowledge.json
+ai_memory.json
+temp_*
+test_*
+
+# Backups
+ai_backups/
+*.zip
+
+# Voice models (large files)
+piper_voice_models/
+*.onnx
+*.onnx.json
+
+# Logs
+*.log
