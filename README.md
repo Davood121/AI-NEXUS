@@ -1,5 +1,7 @@
 # 🚀 ΛI-NEXUS - Revolutionary Self-Improving AI Assistant
 
+> **Project status:** Experimental prototype. Feature completeness and test coverage vary; see the setup instructions and verify behavior in your environment.
+
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![AI](https://img.shields.io/badge/AI-Self--Improving-red.svg)](README.md)
